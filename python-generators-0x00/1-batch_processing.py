@@ -8,7 +8,6 @@ def stream_users_in_batches(batch_size):
         password="your_password",
         database="ALX_prodev"
     )
-
     cursor = connection.cursor(dictionary=True)
     cursor.execute("SELECT * FROM user_data")
 
@@ -16,7 +15,7 @@ def stream_users_in_batches(batch_size):
         batch = cursor.fetchmany(batch_size)
         if not batch:
             break
-        yield batch
+        yield batch  # use yield, not return
 
     cursor.close()
     connection.close()
@@ -27,4 +26,4 @@ def batch_processing(batch_size):
     for batch in stream_users_in_batches(batch_size):
         for user in batch:
             if user["age"] > 25:
-                print(user)
+                yield user  # use yield here too, no print or return
