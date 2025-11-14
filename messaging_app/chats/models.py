@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
 class User(AbstractUser):
-   id = models.UUIDField(primary_key = True, default=uuid.uuid4, editable=False)
+   user_id = models.UUIDField(primary_key = True, default=uuid.uuid4, editable=False)
    first_name = models.CharField(max_length=150, null=False)
    last_name = models.CharField(max_length=150, null=False)
    password=models.CharField(max_length=25, null=False)
@@ -37,7 +37,7 @@ def __str__(self):
         A chat conversation with 2 or more participants.
         """
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    conversation_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     participants = models.ManyToManyField(User, related_name="conversations")
 
@@ -55,7 +55,7 @@ class Message(models.Model):
     Messages inside a conversation.
     """
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    message_id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name="messages")
     conversation = models.ForeignKey(Conversation, on_delete=models.CASCADE, related_name="messages")
